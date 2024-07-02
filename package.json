@@ -1,0 +1,27 @@
+{
+  "name": "api-ecommerce-mern",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "node --watch src/index.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "author": "alexisxde",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "prettier": "3.3.2",
+    "standard": "^17.1.0"
+  },
+  "dependencies": {
+    "express": "4.19.2",
+    "mysql2": "^3.10.2",
+    "uuid": "^10.0.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+}
