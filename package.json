@@ -13,12 +13,28 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "prettier": "3.3.2"
+    "prettier": "3.3.2",
+    "standard": "^17.1.0"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "4.19.2",
     "mysql2": "^3.10.2",
     "uuid": "^10.0.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json",
+    "rules": {
+      "camelcase": "off",
+      "space-before-function-paren": "off",
+      "spaced-comment": "off",
+      "no-console": "error",
+      "no-label-var": "error",
+      "no-multi-str": "error",
+      "no-negated-condition": "error",
+      "no-nested-ternary": "error",
+      "no-unneeded-ternary": "error",
+      "no-var": "error"
+    }
   }
 }
