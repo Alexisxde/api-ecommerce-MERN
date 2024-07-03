@@ -21,6 +21,22 @@ const parseString = (stringFromRequest, key) => {
   return stringFromRequest
 }
 
+const parseNumber = (numberFromRequest, key) => {
+  if (numberFromRequest === undefined) {
+    throw new Error(`Required ${key} field.`)
+  }
+  if (numberFromRequest === '') {
+    throw new Error(`The ${key} field cannot be empty.`)
+  }
+  if (typeof numberFromRequest !== 'number') {
+    throw new Error(`Incorrect or missing ${key}.`)
+  }
+  if (key === 'quantity' && numberFromRequest < 0) {
+    throw new Error('The stock quantity cannot be less than 0.')
+  }
+  return numberFromRequest
+}
+
 const parseBoolean = (stringFromRequest, key) => {
   if (stringFromRequest === undefined) {
     throw new Error(`Required ${key} field.`)
@@ -32,7 +48,6 @@ const parseBoolean = (stringFromRequest, key) => {
   if (!validValues.includes(stringFromRequest)) {
     throw new Error(`Invalid value for ${key}.`)
   }
-
   return stringFromRequest
 }
 
@@ -67,6 +82,44 @@ export function toUpdateProduct(data) {
       }
       if (key === 'purchase_price' || key === 'sale_price') {
         value = formatPrice(parseString(data[key], key), key)
+      }
+      if (value !== undefined && value !== null && value !== '') {
+        nonEmptyFields[key] = value
+      }
+    }
+  }
+  return nonEmptyFields
+}
+
+export function toNewStockAndSize(data) {
+  const newStockAndSize = {
+    id_product: parseString(data.id_product, 'id_product'),
+    size: parseNumber(data.size, 'size'),
+    quantity: parseNumber(data.quantity, 'quantity'),
+    is_active: parseBoolean(data.is_active, 'is_active')
+  }
+  return newStockAndSize
+}
+
+export function toUpdateSizeStock(data) {
+  const updateSizeStock = {
+    id_product: parseString(data.id_product, 'id_product'),
+    size: parseNumber(data.size, 'size'),
+    quantity: parseNumber(data.quantity, 'quantity')
+  }
+  return updateSizeStock
+}
+
+export function toUpdateStock(data) {
+  const nonEmptyFields = {}
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      let value = data[key]
+      if (value === '') {
+        throw new Error(`The ${key} field cannot be empty.`)
+      }
+      if (key === 'size' || key === 'quantity') {
+        value = parseNumber(data[key], key)
       }
       if (value !== undefined && value !== null && value !== '') {
         nonEmptyFields[key] = value
