@@ -28,6 +28,8 @@
       "camelcase": "off",
       "space-before-function-paren": "off",
       "spaced-comment": "off",
+      "prefer-const": "off",
+      "no-prototype-builtins": "off",
       "no-console": "error",
       "no-label-var": "error",
       "no-multi-str": "error",

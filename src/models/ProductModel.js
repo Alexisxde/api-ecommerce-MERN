@@ -1,14 +1,14 @@
-import { conexion } from '../config.js'
 import { v4 as uuidv4 } from 'uuid'
+import { conexion } from '../config.js'
 
 export async function getAllProducts(active = 'all') {
   if (active === 'all') return conexion.query('SELECT * FROM products')
-  return conexion.query(`SELECT * FROM products WHERE is_active = ?`, [active])
+  return conexion.query('SELECT * FROM products WHERE is_active = ?', [active])
 }
 
 export async function getProductById(id) {
   const [result] = await conexion.query(
-    `SELECT * FROM products WHERE id_product = ?`,
+    'SELECT * FROM products WHERE id_product = ?',
     [id]
   )
   return result
@@ -18,7 +18,7 @@ export async function addProduct(data) {
   const id_product = uuidv4()
   const img = 'img'
   const {
-    //img,
+    // img,
     purchase_price,
     sale_price,
     discount,

@@ -1,11 +1,11 @@
 import express from 'express'
 import {
-  getAllStock,
-  getStockById,
-  getAllStockBySize,
   addStockAndSize,
-  updateStockFields,
-  deleteSize
+  deleteSize,
+  getAllStock,
+  getAllStockBySize,
+  getStockById,
+  updateStockFields
 } from '../controllers/StockController.js'
 
 const router = express.Router()

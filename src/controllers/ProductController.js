@@ -1,9 +1,9 @@
 import {
+  addProduct as addProductModel,
+  deleteProduct as deleteProductModel,
   getAllProducts as getAllProductsModel,
   getProductById as getProductByIdModel,
-  addProduct as addProductModel,
-  updateProduct as updateProductModel,
-  deleteProduct as deleteProductModel
+  updateProduct as updateProductModel
 } from '../models/ProductModel.js'
 import { toNewProduct, toUpdateProduct } from '../utils.js'
 

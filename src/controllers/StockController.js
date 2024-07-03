@@ -1,10 +1,10 @@
 import {
+  addStockAndSize as addStockAndSizeModel,
+  deleteSize as deleteSizeModel,
+  getAllStockBySize as getAllStockBySizeModel,
   getAllStock as getAllStockModel,
   getStockById as getStockByIdModel,
-  getAllStockBySize as getAllStockBySizeModel,
-  addStockAndSize as addStockAndSizeModel,
-  updateStockFields as updateStockFieldsModel,
-  deleteSize as deleteSizeModel
+  updateStockFields as updateStockFieldsModel
 } from '../models/StockModel.js'
 import { toNewStockAndSize, toUpdateStock } from '../utils.js'
 

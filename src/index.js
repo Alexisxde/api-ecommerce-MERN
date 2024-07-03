@@ -1,5 +1,5 @@
-import express from 'express'
 import dotenv from 'dotenv'
+import express from 'express'
 import { PORT } from './config.js'
 import ProductsRoutes from './routes/products.js'
 import StockRoutes from './routes/stock.js'
@@ -20,5 +20,6 @@ app.use('/api/products', validateApiKey, ProductsRoutes)
 app.use('/api/stock', validateApiKey, StockRoutes)
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server running on port http://localhost:${PORT}`)
 })

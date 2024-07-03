@@ -2,12 +2,12 @@ import { conexion } from '../config.js'
 
 export async function getAllStock(active = 'all') {
   if (active === 'all') return conexion.query('SELECT * FROM stock')
-  return conexion.query(`SELECT * FROM stock WHERE is_active = ?`, [active])
+  return conexion.query('SELECT * FROM stock WHERE is_active = ?', [active])
 }
 
 export async function getStockById(id_product) {
   const [result] = await conexion.query(
-    `SELECT * FROM stock WHERE id_product = ?`,
+    'SELECT * FROM stock WHERE id_product = ?',
     [id_product]
   )
   return result
@@ -15,14 +15,14 @@ export async function getStockById(id_product) {
 
 export async function getStockByIdAndSize(id_product, size) {
   const [result] = await conexion.query(
-    `SELECT * FROM stock WHERE id_product = ? AND size = ?`,
+    'SELECT * FROM stock WHERE id_product = ? AND size = ?',
     [id_product, size]
   )
   return result
 }
 
 export async function getAllStockBySize(size) {
-  const [result] = await conexion.query(`SELECT * FROM stock WHERE size = ?`, [
+  const [result] = await conexion.query('SELECT * FROM stock WHERE size = ?', [
     size
   ])
   return result
@@ -31,7 +31,7 @@ export async function getAllStockBySize(size) {
 export async function addStockAndSize(data) {
   const { id_product, size, quantity, is_active } = data
   const [existingRecord] = await conexion.query(
-    `SELECT * FROM stock WHERE id_product = ? AND size = ?`,
+    'SELECT * FROM stock WHERE id_product = ? AND size = ?',
     [id_product, size]
   )
   if (existingRecord.length > 0) {
@@ -52,7 +52,7 @@ export async function addStockAndSize(data) {
 
 export async function updateStockFields(id_product, size, fieldsToUpdate) {
   if (size === undefined) {
-    throw new Error(`Required size field.`)
+    throw new Error('Required size field.')
   }
   const fieldNames = Object.keys(fieldsToUpdate)
   const fieldValues = Object.values(fieldsToUpdate)
