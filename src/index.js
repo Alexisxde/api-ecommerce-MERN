@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import { PORT } from './config.js'
 import ProductsRoutes from './routes/products.js'
+import StockRoutes from './routes/stock.js'
 
 dotenv.config()
 const app = express()
@@ -16,6 +17,7 @@ const validateApiKey = (req, res, next) => {
 }
 
 app.use('/api/products', validateApiKey, ProductsRoutes)
+app.use('/api/stock', validateApiKey, StockRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`)
