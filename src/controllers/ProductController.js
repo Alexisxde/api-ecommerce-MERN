@@ -9,10 +9,11 @@ import { toNewProduct, toUpdateProduct } from '../utils.js'
 
 export async function getAllProducts(req, res) {
   try {
-    const [products] = await getAllProductsModel(req.query.active)
+    const { active, page } = req.query
+    const [products] = await getAllProductsModel(active, page)
     res.json({
       result: products,
-      page: 1,
+      page,
       total_products: products.length
     })
   } catch (error) {
@@ -31,7 +32,7 @@ export async function getProductById(req, res) {
     }
     res.json(product)
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ type: 'error', message: error.message })
   }
 }
 

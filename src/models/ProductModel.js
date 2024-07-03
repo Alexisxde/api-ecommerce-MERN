@@ -1,17 +1,62 @@
 import { v4 as uuidv4 } from 'uuid'
 import { conexion } from '../config.js'
 
-export async function getAllProducts(active = 'all') {
-  if (active === 'all') return conexion.query('SELECT * FROM products')
-  return conexion.query('SELECT * FROM products WHERE is_active = ?', [active])
+export async function getAllProducts(active = 'all', page = 1, pageSize = 10) {
+  const offset = (page - 1) * pageSize
+  if (active === 'all') {
+    return conexion.query('SELECT * FROM products LIMIT ? OFFSET ?', [
+      pageSize,
+      offset
+    ])
+  }
+  return conexion.query(
+    'SELECT * FROM products WHERE is_active = ? LIMIT ? OFFSET ?',
+    [active, pageSize, offset]
+  )
 }
 
 export async function getProductById(id) {
   const [result] = await conexion.query(
-    'SELECT * FROM products WHERE id_product = ?',
+    `SELECT products.*, stock.* FROM products 
+    INNER JOIN stock ON stock.id_product = products.id_product
+    WHERE products.id_product = ? AND stock.is_active = 1`,
     [id]
   )
-  return result
+  if (result.length === 0) throw new Error('Product sizes does not exist.')
+  const {
+    id_product,
+    // img,
+    purchase_price,
+    sale_price,
+    discount,
+    brand,
+    model,
+    stars,
+    is_active,
+    description
+  } = result[0]
+  const stock = result.map(({ id_stock, size, quantity }) => {
+    return {
+      id_stock,
+      size,
+      quantity,
+      is_active
+    }
+  })
+  const product = {
+    id_product,
+    // img,
+    purchase_price,
+    sale_price,
+    discount,
+    brand,
+    model,
+    stars,
+    is_active,
+    description,
+    stock
+  }
+  return product
 }
 
 export async function addProduct(data) {
