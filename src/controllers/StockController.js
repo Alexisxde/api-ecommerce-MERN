@@ -10,14 +10,21 @@ import { toNewStockAndSize, toUpdateStock } from '../utils.js'
 
 export async function getAllStock(req, res) {
   try {
-    const [stock] = await getAllStockModel(req.query.active)
+    const { active } = req.query
+    if (active !== 'all' && active !== '1' && active !== '0') {
+      return res.status(404).json({
+        type: 'error',
+        message: "query variable active can only be equal to ('all', 1, 0)."
+      })
+    }
+    const [stock] = await getAllStockModel(active)
     if (stock.length === 0) {
       return res
         .status(404)
         .json({ type: 'error', message: 'No stock of the products found.' })
     }
     res.json({
-      result: stock,
+      results: stock,
       total_stock: stock.length
     })
   } catch (error) {
@@ -35,7 +42,7 @@ export async function getStockById(req, res) {
         .json({ type: 'error', message: 'Stock ID not found.' })
     }
     res.json({
-      result: stock,
+      results: stock,
       total_stock: stock.length
     })
   } catch (error) {
