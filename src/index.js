@@ -1,3 +1,4 @@
+import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
 import { PORT } from './config.js'
@@ -7,6 +8,7 @@ import StockRoutes from './routes/stock.js'
 dotenv.config()
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 const validateApiKey = (req, res, next) => {
   const apiKey = req.headers.authorization || `Bearer ${req.query.api_key}`

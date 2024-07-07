@@ -30,13 +30,8 @@ export async function getAllStockBySize(size) {
 
 export async function addStockAndSize(data) {
   const { id_product, size, quantity, is_active } = data
-  const [existingRecord] = await conexion.query(
-    'SELECT * FROM stock WHERE id_product = ? AND size = ?',
-    [id_product, size]
-  )
-  if (existingRecord.length > 0) {
-    throw new Error('The specified size for this product already exists.')
-  }
+  const existingRecord = await getStockByIdAndSize(id_product, size)
+  if (existingRecord.length > 0) return []
   const [stock] = await getAllStock()
   const [response] = await conexion.query(
     `INSERT INTO stock

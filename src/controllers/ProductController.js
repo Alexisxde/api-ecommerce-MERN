@@ -17,15 +17,13 @@ export async function getAllProducts(req, res) {
         message: "query variable active can only be equal to ('all', 1, 0)."
       })
     }
-    return res
-      .json({
-        results: products,
-        page,
-        total_products: products.length
-      })
-      .status(200)
+    return res.status(200).json({
+      results: products,
+      page,
+      total_products: products.length
+    })
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ type: 'error', message: error.message })
   }
 }
 
@@ -36,9 +34,9 @@ export async function getProductById(req, res) {
     if (product.length === 0) {
       return res
         .status(404)
-        .json({ type: 'error', message: 'Product not found.' })
+        .json({ type: 'error', message: 'Product id does not exist' })
     }
-    return res.json(product).status(200)
+    return res.status(200).json(product)
   } catch (error) {
     res.status(500).json({ type: 'error', message: error.message })
   }
@@ -49,8 +47,8 @@ export async function addProduct(req, res) {
     const data = toNewProduct(req.body)
     await addProductModel(data)
     return res
-      .json({ type: 'success', message: 'Product added correctly!' })
       .status(200)
+      .json({ type: 'success', message: 'Product added correctly!' })
   } catch (error) {
     res.status(500).json({ type: 'error', message: error.message })
   }
@@ -62,8 +60,8 @@ export async function updateProduct(req, res) {
     toUpdateProduct(req.body)
     await updateProductModel(id_product, data)
     return res
-      .json({ type: 'success', message: 'Product updated correctly!' })
       .status(200)
+      .json({ type: 'success', message: 'Product updated correctly!' })
   } catch (error) {
     res.status(500).json({ type: 'error', message: error.message })
   }
@@ -75,12 +73,12 @@ export async function deleteProduct(req, res) {
     const response = await deleteProductModel(id_product)
     if (!response) {
       return res
-        .json({ type: 'error', message: 'Product is already removed.' })
         .status(404)
+        .json({ type: 'error', message: 'Product is already removed.' })
     }
     return res
-      .json({ type: 'success', message: 'Product removed.' })
       .status(200)
+      .json({ type: 'success', message: 'Product removed.' })
   } catch (error) {
     res.status(404).json({ type: 'error', message: error.message })
   }

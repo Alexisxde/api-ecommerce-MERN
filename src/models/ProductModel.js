@@ -31,7 +31,7 @@ export async function getProductByIdJOIN(id) {
     WHERE products.id_product = ? AND stock.is_active = 1`,
     [id]
   )
-  if (result.length === 0) throw new Error('Product id does not exist.')
+  if (result.length === 0) return []
   const {
     id_product,
     // img,
